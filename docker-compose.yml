@@ -1,0 +1,6 @@
+version: '2.4'
+services:
+  vulnerable-log4shell:
+    image: ghcr.io/christophetd/log4shell-vulnerable-app
+  vulnerable-openssl:
+    image: clojure:temurin-17-lein-2.9.8-jammy
