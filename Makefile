@@ -7,4 +7,7 @@ get-osquery-binary:
 	  get-os-query-binary /opt/get_osquery_binary.sh
 
 run-containers:
-	docker-compose up -d
+	docker compose up -d
+
+find-openssl3:
+	bin/osqueryd -S < find_openssl_vulnerability.sql
