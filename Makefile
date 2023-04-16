@@ -1,8 +1,8 @@
-all: setup find-openssl3
+all: setup all-finds
 
-setup: get-osquery-binary run-containers
+setup: bin/osqueryd run-containers
 
-get-osquery-binary:
+bin/osqueryd:
 	docker build -f get_osquery_binary.Dockerfile -t get-os-query-binary .
 	mkdir -p ./bin/
 	docker run --rm -it \
@@ -12,9 +12,25 @@ get-osquery-binary:
 
 run-containers: stop-containers
 	docker-compose up -d
+	# ugly, but ensures the OpenSSL process is running when we pull pids
+	sleep 2
 
 stop-containers:
 	docker-compose down
 
+all-finds: find-openssl3 find-openssl3-wrapped-distinct find-openssl3-wrapped-groupby find-openssl3-wrapped-limit find-openssl3-wrapped-orderby
+
 find-openssl3:
-	sudo bin/osqueryd -S < find_openssl_vulnerability.sql
+	sudo bin/osqueryd -S < find_openssl_vulnerability.fancy.sql
+
+find-openssl3-wrapped-distinct:
+	-sudo bin/osqueryd -S < find_openssl_vulnerability.fancy.wrapped.distinct.sql
+
+find-openssl3-wrapped-groupby:
+	-sudo bin/osqueryd -S < find_openssl_vulnerability.fancy.wrapped.groupby.sql
+
+find-openssl3-wrapped-limit:
+	sudo bin/osqueryd -S < find_openssl_vulnerability.fancy.wrapped.limit.sql
+
+find-openssl3-wrapped-orderby:
+	-sudo bin/osqueryd -S < find_openssl_vulnerability.fancy.wrapped.orderby.sql
