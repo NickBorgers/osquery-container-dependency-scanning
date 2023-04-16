@@ -6,7 +6,8 @@ This repo should be clone-and-run provided you have:
 * Cloned this to a Linux host (doesn't work with Docker Desktop)
 * Docker
 * GNU Make
-Specifically you should be able to clone and then run `make` and see the output in Current Output.
+
+Specifically: you should be able to clone and then run `make` and see the output in Current Output.
 
 ## Current Output (with duplicates)
 
